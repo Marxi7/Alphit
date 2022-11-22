@@ -1,0 +1,189 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+
+{% block main %}
+<h1>Track Your Macros and Trainings Here</h1>
+<main class="container py-5 text-center">
+    <h3 style="text-align:center;">Enter today's kcal below!</h3>
+
+    <form style="margin-bottom:10px;" autocomplete="off" name="kcal_tracking" method="post" action="/tracking">
+            <input class="center-block form-control" id="id1" type="text" placeholder="Today's Kcals" name="kcals" required>
+            <input class="center-block form-control" id="id2" type="date" name="date" required>
+            <input id="button_tracking_kcal" type="submit" class="btn btn-primary" name="submit" value="Save Kcal">
+    </form>
+    <div>
+        <p style="text-align:center; color:rgb(82, 82, 82); max-width:400px; margin-left: auto; margin-right: auto; font-size:10px;">
+            *Note that if you already entered your kcals for today and you submit a new number again,
+            it will update the number entered at that date in the past.</p>
+    </div>
+
+    <hr style="margin-top:50px; max-width:700px; margin-left: auto; margin-right: auto;">
+
+
+    <h3 style="text-align:center; margin-top: 50px;">Track your workout here</h3>
+
+    {% if workout_exist == "yes" %}
+    <h8 style="margin-bottom: 20px;">Select One of your workouts below and update it if needed!</h8>
+
+
+    <form style="margin-bottom:10px;">
+
+        <select id ="select_workout" class="btn btn-dark" style="margin-left: auto; margin-right: auto;" name="workouts" onchange="showDiv(value)">
+            <option value="0" selected disabled hidden>Select today's workout</option>
+            {% for row in workouts %}
+            <option value={{row.id}}>{{ row.name }}</option>
+            {% endfor%}
+        </select>
+
+    </form>
+
+    <div id="workoutTable"></div>
+
+
+    <script>
+        const workoutTable = document.querySelector('#workoutTable');
+        workouts = {{ workouts | tojson }}
+    
+        function showDiv(value){
+                workoutTable.innerHTML = ""
+    
+            workouts.forEach(workout => {
+    
+                if(value == workout.id) {
+    
+                    let submitINPUT = "<button class='btn btn-primary' value='Log Workout' onclick='mysubmit(`" + workout.name + "`)'>save your workout</button>"
+                    let dateINPUT = '<input class="center-block form-control" type="date" name="date" required>'
+    
+                    let finalWeight = 0
+    
+                    let workoutHTML = document.createElement("form")
+                    workoutHTML.setAttribute("class", "workout");
+                    workoutHTML.classList.add("card");
+                    let workoutHEADER = document.createElement("h2")
+    
+    
+                    let exerciseTable = document.createElement("div")
+                    exerciseTable.setAttribute("class", "exercises");
+    
+                    workoutHEADER.innerHTML = workout.name.toString()
+                    workoutHTML.appendChild(workoutHEADER)
+                    workoutHTML.appendChild(exerciseTable)
+    
+                    workoutTable.appendChild(workoutHTML)
+    
+                    workout.exercises.forEach(exercise => {
+    
+                        let exerciseHTML = document.createElement("div")
+                        exerciseHTML.setAttribute("class", "exercise");
+                        exerciseHTML.innerHTML = exercise.name.toString()
+    
+                        let setTable = document.createElement("div")
+                        setTable.setAttribute("class", "sets");
+    
+                        exerciseHTML.appendChild(setTable)
+    
+                        exerciseTable.appendChild(exerciseHTML)
+    
+                        exercise.sets.forEach(set => {
+                            let setHTML = document.createElement("div")
+                            setHTML.setAttribute("class", "set");
+    
+    
+                            let repLABEL = document.createElement("label")
+                            repLABEL.innerHTML = "reps: "
+                            let repINPUT = document.createElement("input")
+    
+                            repINPUT.name = "rep"
+                            repINPUT.type = "number"
+                            repINPUT.value = set.reps.toString()
+                            repINPUT.setAttribute("class", "rep");
+    
+    
+                            setHTML.appendChild(repLABEL)
+                            setHTML.appendChild(repINPUT)
+    
+                            let weightLABEL = document.createElement("label")
+                            weightLABEL.innerHTML = "weight: "
+                            let weightINPUT = document.createElement("input")
+    
+                            weightINPUT.name = "weight"
+                            weightINPUT.type = "number"
+                            weightINPUT.value = set.weight.toString()
+                            weightINPUT.setAttribute("class", "weight");
+    
+    
+                            setHTML.appendChild(repLABEL)
+                            setHTML.appendChild(repINPUT)
+    
+                            setHTML.appendChild(weightLABEL)
+                            setHTML.appendChild(weightINPUT)
+    
+    
+                            setTable.appendChild(setHTML)
+    
+                        })
+                    })
+                workoutHTML.insertAdjacentHTML("beforeend", submitINPUT)
+                workoutHTML.insertAdjacentHTML("afterbegin", dateINPUT)
+            }})
+        }
+    
+        let volume = 0
+    
+        function mysubmit(workoutName){
+            event.preventDefault()
+            let form = event.target.closest(".workout")
+            let date = form.date.value
+            const sets = document.getElementsByClassName("set")
+    
+            if(date === ""){
+                return
+            }
+    
+            for(let i = 0; i<sets.length; i++){
+                let rep = sets[i].getElementsByClassName("rep").rep.value
+                let weight = sets[i].getElementsByClassName("weight").weight.value
+    
+                console.log(rep)
+    
+                volume += rep * weight
+            }
+            console.log(volume, workoutName, date)
+    
+            let fetchData = {
+                method: "POST",
+                redirect: 'follow',
+                body: JSON.stringify({workoutName, volume, date}),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            }
+    
+            fetch('/workout-history', fetchData)
+            .then(function(response) {
+                window.location.replace("/");
+            })
+            // reset la valeur de volume pour éviter une incrémentation de l'user
+            volume = 0
+            // let msgSuccess = "Your workout has been saved!"
+            // const workout = document.getElementsByClassName("workout")
+    
+            // workout[0].insertAdjacentHTML("beforeend", msgSuccess)
+    
+        }
+    
+        </script>
+
+        {% elif workout_exist == "no" %}
+
+    <p style="text-align:center;">You didn't create any workout yet. Get started by creating your first workout <a href="/new-workout">Here! </a></p>
+
+    {% endif %}
+
+</main>
+{% endblock %}

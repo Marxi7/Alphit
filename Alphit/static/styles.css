@@ -1,0 +1,227 @@
+/* Size for brand */
+nav .navbar-brand
+{
+    font-size: xx-large;
+}
+
+.dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+
+input[type=radio] {
+    display: inline;
+}
+
+input[type=number], input[type=text]{
+    font-size: 16px;
+}
+
+  input, textarea, select { 
+    margin-top: 10px; display: block;
+    content: center;
+}
+
+form { 
+    max-width: 400px;
+    margin-block: 50 px;
+    margin-right: auto;
+    margin-left: auto;
+    }
+
+/* page result macros */
+.table{
+    margin-bottom: 50px;
+}
+
+@media screen and (max-width: 640px) {
+    .table{
+        font-size: 12px;
+        word-break: break-word;
+    }
+}
+
+/* Workout Page */
+#workout_p{
+    text-align: center;
+}
+
+#add_exercise_button, #add_set_button{
+    background-color:rgb(110, 169, 104);
+    border: none;
+}
+
+#delete_button1, #delete_button2{
+    background-color:rgb(209, 85, 85);
+    border: none;
+}
+
+  
+/* Pop-up bodyfat */
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 0.5s;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.overlay:target {
+visibility: visible;
+opacity: 1;
+}
+
+.popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+}
+
+.popup h2 {
+    margin: 20px;
+    margin-top: 10px;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 24px;
+  }
+
+.popup p {
+    text-align: justify;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.titles_popup_activity{
+    text-align: left;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.popup .close {
+position: absolute;
+top: 20px;
+right: 30px;
+transition: all 200ms;
+font-size: 30px;
+font-weight: bold;
+text-decoration: none;
+color: #333;
+}
+
+.popup .close:hover {
+color: #5998FE;
+}
+
+.popup .content {
+max-height: 700px;
+overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+.box{
+    width: 70%;
+}
+.popup{
+    width: 80%;
+    max-height: calc(100vh - 180px);
+    overflow: auto;
+}
+}
+
+.text_popup{
+    margin-top: 10px;
+}
+
+p {
+    text-align: justify;
+}
+
+.explanations{
+    margin-bottom: 20px;
+}
+
+/* page dashboard */
+
+#table_macro_dashboard{
+    max-width: 650px;
+    margin: 0px auto;
+    float: none;
+    margin-top: 10px;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+/* page track your macros and trainings */
+
+#id1, #id2 {
+    text-align:center
+}
+
+.center-block {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 200px;
+  }
+
+
+/* Tracking Page */
+#hidden_div {
+    display: none;
+}
+
+
+
+/* Search Recipe result page */
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 7px;
+  }
+
+  
+  /* On mouse-over, add a deeper shadow */
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+
+
+  /* Display table of workout */
+
+  #workoutTable > .workout > .exercises > .exercise > .sets > .set{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #workoutTable > .workout > .exercises > .exercise > .sets > .set > input{
+    margin: 0px 6px;
+    width: 50px;
+  }
+
+  #workoutTable > .workout > .exercises > .exercise > .sets > .set {
+    margin: 10px 0;
+  }
+  
+  #workoutTable > h2 {
+    font-size: 16px; 
+    font-weight: bold;
+  }
+
+  #workoutTable > .workout {
+    padding: 32px 32px 64px;
+  }
+
+  

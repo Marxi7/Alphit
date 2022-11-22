@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block main %}
+    <h1>History</h1> 
+
+    <h5>Below are the histories of your Nutritional Goals, your kcals logs and your workouts logs!</h5>
+
+    <main class="container py-5 text-center"> 
+        <h2>Nutritional Goals History</h2>
+        {% if nutrition_goal_exist == "yes" %}
+            <table style="max-width:700px; margin-left:auto;margin-right:auto;" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-start">Starting point</th>
+                        <th class="text-end">Kcal</th>
+                        <th class="text-end">Date</th>
+                        
+                    </tr>
+                </thead>
+            
+                <tbody class="table-group-divider">
+                    {% for row in nutritional_goals_history %}
+                    <tr>
+                        <td class="text-start"> {{ row.weight }} kg </td>
+                        <td class="text-end"> {{ row.kcal }} </td>
+                        <td class="text-end"> {{ row.date }} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% elif nutrition_goal_exist == "no" %}
+            <p style="text-align:center;">You didn't set any Nutritional Goal yet. Get started by calculating your macros <a href="/macros">Here! </a></p>
+        {% endif %}
+
+        <h2 style="margin-top: 50px;">Nutritional Logs History</h2>
+        {% if kcallog_exist == "yes" %}
+
+            <table style="max-width:700px; margin-left:auto;margin-right:auto;" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-start">Kcals</th>
+                        <th class="text-end">Date</th>           
+                    </tr>
+                </thead>
+            
+                <tbody class="table-group-divider">
+                    {% for row in kcal_logs %}
+                    <tr>
+                        <td class="text-start"> {{ row.kcal }} </td>
+                        <td class="text-end"> {{ row.date }} </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        {% elif kcallog_exist == "no" %}
+            <p style="text-align:center;">You didn't log any kcal yet, start tracking your kcals <a href="/macros">Here! </a></p>
+        {% endif %}
+
+
+
+        <h2 style="margin-top: 50px;">Workout Logs History</h2>
+
+        {% if workouts_history_exist == "yes" %}
+        <table style="max-width:700px; margin-left:auto;margin-right:auto;" class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-start">Type Workout</th>
+                    <th class="text-start">Volume</th>
+                    <th class="text-end">Date</th>           
+                </tr>
+            </thead>
+      
+            <tbody class="table-group-divider">
+                {% for row in workouts_history %}
+                <tr>
+                    <td class="text-start"> {{ row['name'] }} </td>
+                    <td class="text-start"> {{ row['volume'] }}  </td>
+                    <td class="text-end"> {{ row['date'] }} </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% elif workouts_history_exist == "no" %}
+            <p style="text-align:center;">You didn't log any workout yet, start <a href="/tracking">Here! </a></p>
+        {% endif %}
+
+
+
+
+    </main>
+{% endblock %}

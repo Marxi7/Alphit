@@ -1,0 +1,204 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    My Workouts
+{% endblock %}
+
+{% block main %}
+
+    <h1 x-data="{ message: 'Create and register your workouts here! &#x1F3CB;' }" x-text="message"></h1>
+
+
+    <main class="container py-5 text-center" style="max-width:600px;">
+      <div x-data="workout" style="text-align:left;">
+
+
+        <div class="mb-5">
+          <input placeholder="Workout Name..." style="font-size:42px; outline:0;" class="w-100 shadow  text-center border-0 outline-0" x-model="workout.name" type="text">
+
+        </div>
+
+        <div class="mb-5 d-flex justify-content-center align-items-center">
+          <input placeholder="Exercise Name" class="mt-0 p-1 d-block" x-model="newExercise" type="text">
+          <button x-on:click="createExercise(newExercise);" class="d-block btn btn-primary ml-1">Add Exercise</button>
+        </div>
+        
+  
+  
+          <template x-for="exercise in workout.exercises">
+            <div class="card my-4 position-relative">
+              <h5 x-text="exercise.name" class="card-header"></h5>
+              <button @click="removeExercise(exercise.id)" style="right:5px; top:5px;" class="btn btn-danger btn-sm position-absolute pull-righ">X</button>
+              
+  
+              <div x-data="{ reps:0, weight: 0}" class="card-body">
+  
+                <table class="table table-dark table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Reps</th>
+                      <th  class="text-end" scope="col">Weight</th>
+                      <th  class="text-end" scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <template x-for="set in exercise.sets">
+                      <tr>
+                        <td x-text="set.reps"></td>
+                        <td class="text-end" x-text="set.weight + ' kg'"></td>
+                        <td><button @click="removeSet(exercise.id, set.id)" style="right:5px; top:5px;" class="btn btn-danger btn-sm ">X</button></td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </table>
+                
+              <div class="input-group mb-5">
+                  <input style="right:5px;" x-model="reps" type="number" class="form-control mr-2" min="0" placeholder="Reps"/>
+                  <input x-model="weight" type="number" class="form-control mr-2" min="0" step="0.5" placeholder="Weight"/>
+              </div>
+                
+                <button @click="addSet(exercise.id, reps, weight)" class="btn btn-success">Add Set</button>
+              </div>
+  
+            </div>
+          </template>
+  
+          <button @click="save()" type="submit" class="btn btn-success d-block w-100 py-3">Save</button>
+       
+      </div>
+    </main>
+    
+
+        
+        
+
+        <script>
+              document.addEventListener('alpine:init', () => {
+              Alpine.data('workout', () => ({
+                  
+                workout:{
+                    name:'',
+                    exercises:[],
+                    volume:0,
+                    get_volume(){
+                      let total = 0
+                      this.exercises.forEach(exercise => {
+                          exercise.sets.forEach(set => {
+                            total+= set['weight']*set['reps']
+                          })
+                      })
+                      this.volume = total
+                  },
+                  },
+                  
+                    addSet(id,reps,weight){
+                      console.log("XXX")
+                      this.workout.exercises.forEach(exercise => {
+                        if (exercise.id == id){
+
+                          let setModel = {
+                            id:0,
+                            reps:parseFloat(reps),
+                            weight:parseFloat(weight)
+                          }
+
+                          if (exercise.sets.length==0){
+                            setModel.id = 1
+                          }
+
+                          else{
+                            exercise.sets.forEach(set => {
+
+                              if(setModel.id <= set.id){
+                                setModel.id = set.id + 1;
+                              }
+
+                            })
+                          }
+
+                          console.log("HHOOOO")
+                          exercise.sets.push(setModel)
+                        }
+                      })
+                    }
+                  ,
+                    removeSet(exerciseId, setId){
+                      this.workout.exercises.forEach(exercise => {
+                        if(exercise.id == exerciseId){
+                          exercise.sets.forEach((set,index) => {
+                            if (set.id == setId){
+                              exercise.sets.splice(index,1)
+                            }
+                          })
+                        }
+                      })
+                    }
+                  ,
+                    removeExercise(id){
+                      console.log(id)
+                      this.workout.exercises.forEach((item,index) => {
+                        console.log(item,index)
+                        if(item.id==id){
+                          this.workout.exercises.splice(index,1)
+                        }
+                      })
+                    }
+                  ,
+                  createExercise(name){
+
+                    let exerciseModel = {
+                      id:0,
+                      name:name,
+                      sets:[],
+                    }
+
+                    if (this.workout.exercises.length==0){
+                      exerciseModel.id=1;
+                    }
+                    else{
+                      this.workout.exercises.forEach(element => {
+                        if(exerciseModel.id <= element.id){
+                          exerciseModel.id = element.id + 1;
+                        }
+                      })
+                    }
+
+                    this.workout.exercises.push(exerciseModel);
+                     this.$nextTick(() => {window.scrollTo(0, document.body.scrollHeight);});
+                    console.log(exerciseModel)
+                  },
+                  save(){
+                    this.workout.get_volume()
+                    
+
+                    let fetchData = {
+                      method: 'POST',
+                      redirect: 'follow',
+                      body: JSON.stringify(this.workout),
+                       headers: {
+                          'Accept': 'application/json',
+                          'Content-Type': 'application/json'
+                        },
+                    }
+
+                    fetch('/new-workout', fetchData)
+                    .then(function(response) {
+                      console.log(response.text())
+                      // console.log("okok")
+                       window.location.replace("/");
+                      // Handle response we get from the API
+                    })
+
+                  },
+                  newExercise: '',
+
+                  
+                  toggle() {
+                      this.open = ! this.open
+                  }
+              }))
+          })
+        </script>
+
+        <!-- https://alpinejs.dev/start-here -->
+{% endblock %}

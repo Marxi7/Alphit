@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Recipes
+{% endblock %}
+
+{% block main %}
+    <h1>Recipe Search Results</h1> 
+
+    <h6 style="color:red;"><b>Each field must be completed to do a recipe search!</b></h6>
+
+
+    <form method="post" action="/search-recipe" style="margin-left:auto; margin-right: auto;">
+        <div class="form-row">
+            <div class="input-group">
+                <input name="minCalories" style="right:5px;" type="number" class="form-control mr-2" min="0" placeholder="minCalories" required/>
+                <input name="maxCalories" type="number" class="form-control mr-2" min="0" placeholder="maxCalories" required/>
+            </div>
+
+            <div class="input-group">
+                <input name="minProtein" style="right:5px;" type="number" class="form-control mr-2" min="0" placeholder="minProtein" required/>
+                <input name="maxProtein" type="number" class="form-control mr-2" min="0" placeholder="maxProtein" required/>
+            </div>
+
+            <div class="input-group">
+                <input name="minCarbs" style="right:5px;" name="MinCarbs" type="number" class="form-control mr-2" min="0" placeholder="minCarbs" required/>
+                <input name="maxCarbs" type="number" class="form-control mr-2" min="0" placeholder="maxCarbs" required/>
+            </div>
+
+            <div class="input-group">
+                <input name="minFat" style="right:5px;" type="number" class="form-control mr-2" min="0" placeholder="minFat" required/>
+                <input name="maxFat" type="number" class="form-control mr-2" min="0" placeholder="maxFat" required/>
+            </div>
+
+            <div class="input-group">
+                <input name="number" style="right:5px;" type="number" class="form-control mr-2" min="0" placeholder="Number of recipes" required/>
+            </div>
+            <p style="margin-top: 10px; text-align:justify; color:rgb(82, 82, 82); max-width:700px; margin-left: auto; margin-right: auto; font-size:10px;"> 
+                *Note that our app will try to display the number of recipes you entered, however, if you enter for example 10 recipes and only 9 show up, it might be because there are not more than 9 recipees matching your search criterias.</p>
+        <button style="margin-top:10px;" type="submit" class="btn btn-primary">Search Recipes</button>
+      </form>
+
+
+      
+
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Recipes
+{% endblock %}
+
+{% block main %}
+    <h1>Recipe Search Result &#128523; </h1> 
+
+
+    {% if api_limit == "yes" %}
+
+        <p style="margin-left: auto; margin-right:auto; text-align:center;">It seems like we reached our api request limit for the day, please come back tomorrow!</p>
+
+    {% elif api_limit == "no" %}
+
+        <!--Show/Hide search criteria-->
+        <div style="margin-top: 50px; margin-top: 50px; margin-bottom:50px;" x-data="{ open: false }">
+            <button class="d-inline btn btn-primary" 
+            @click="open = ! open"
+            x-text="open ? 'Hide Search Criteria': 'Show Search Criteria'"
+            ></button>
+         
+            <div style=" margin-top:10px; max-width:800px; margin-left: auto; margin-right:auto;" x-show="open"
+            x-transition:enter.duration.1000ms
+            x-transition:leave.duration.1000ms>
+                <div x-transition.opacity x-cloak>
+                    <p style="margin-left: auto; margin-right:auto; text-align:center;">
+                        <h5>Criteria of this search :</h5>
+                        <b>Calories :</b> From {{ minCalories }} to {{ maxCalories }} kcals<br>
+
+                        <b>Proteins :</b> From {{ minProtein }} to {{ maxProtein }} grams<br>
+
+                        <b>Carbs :</b> From {{ minCarbs }} to {{ maxCarbs }} grams<br>
+
+                        <b>Fat :</b> From {{ minFat }} to {{ maxFat }} grams<br>
+
+                        <b># Recipees Displayed if possible :</b> {{ number }}
+
+                    </p>
+                </div>
+            </div>
+        </div>
+         <!--Show/Hide search criteria-->
+
+         <div style="max-width:1500px;" class="container">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for row in ids_recipe %}
+                <div class="col">
+                <div class="card h-100">
+                        <img src="{{row['image']}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                        <h5 class="card-title">{{row['title']}}</h5>
+                        <a href="{{row['url']}}" class="btn btn-primary">See Recipe</a>
+                    </div>
+                </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+      </div>
+        
+      </div>
+
+
+    
+
+    {% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Close Account
+{% endblock %}
+
+{% block main %}
+    <h1>Here you can close your Account.</h1>
+    <h6>Type <b>"YES"</b> below and then submit to close your account definitively.</h6>
+    <form action="/close_account" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="close_account" placeholder="Type &quot;YES&quot; here" type="text">
+        </div>
+          <button class="btn btn-primary" role="button">Close Account</button>
+    </form>
+{% endblock %}
+
+

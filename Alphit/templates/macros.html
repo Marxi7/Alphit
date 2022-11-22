@@ -1,0 +1,205 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    - Macros
+{% endblock %}
+
+{% block main %}
+    <h1>Let's define your Nutritional Target! &#127919; &#127869;</h1> 
+			<form id="form_macros" name="form-metric-tagged" method="post" action="/macros">
+			  <input type="hidden" name="system" value="metric">
+			  <table>
+			  <tbody>
+                <tr>
+                    <td class="col1">Gender</td>
+                    <td>
+                        <label><input type="radio" name="gender" id="male-metric" value="male" checked=""> Male&nbsp;</label>
+                        <label><input type="radio" name="gender" id="female-metric" value="female"> Female</label>
+			        </td>
+			    </tr>
+			  
+			    <tr>
+			        <td class="col1"><label>Weight</label></td>
+			        <td><input type="text" name="weight" min="0" class="form-control" id="weight-metric" placeholder="kg" style="width: 200px;" maxlength="5" required="True"></td>
+			    </tr>
+
+				<tr>
+			        <td class="col1"><label>BF</label> 
+						<a href="#popup1"><i class="bi-question-circle-fill"id="button_popup" style="font-size:16px"></i></a></td>
+						
+						<div id="popup1" class="overlay">
+							<div class="popup">
+								<h2>Examples you can refer to:</h2>
+								<a class="close" href="#">&times;</a>
+								<div class="content">
+									<div>
+										<image src="{{url_for('static',filename = 'bf_image.png')}}" alt="https://images.app.goo.gl/JDWo3D7M1L7KHqhx8" width=700 height="500">
+									</div>
+
+									<div class="text_popup">
+										If you don't know your Bodyfat % and can't go to a specific place to measure it anytime soon,
+										You can refer to the image above to estimate your bodyfat.
+									</div> 
+
+									</div>
+							</div>
+			        
+					<td><input type="text" name="bodyfat" min="0" class="form-control" id="weight-metric" placeholder="bf %" style="width: 200px;" maxlength="5" required="True"></td>
+			    </tr>
+
+				<tr>
+                    <td class="col1"><label>TEF</label>
+						<a href="#popup2"><i class="bi-question-circle-fill"id="button_popup" style="font-size:16px"></i></a></td>
+
+						<div id="popup2" class="overlay">
+							<div class="popup">
+								<h2>What is TEF?</h2>
+								<a class="close" href="#">&times;</a>
+								<div class="content">
+									<div class="text_popup">
+										<p>
+										The thermic effect of food (TEF) is the amount of energy it takes for your body to digest, absorb, and metabolise the food you eat.
+										TEF makes up a part of your daily calorie expenditure (calories out), and usually represents about 10% of the caloric intake of healthy adults eating a mixed and balanced diet.
+										</p>
+
+										<p>
+										So for example, if you expend 2000 calories in a day, around 200 of those will be burned just from eating food.
+										Certain food types such as protein and complex carbs have a higher thermic effect than fats or simple carbs because your body has to work harder to break it down, thus spending more energy and burning more calories.
+										Varying factors affect TEF, primarily the portion size of your meal and its macronutrient composition – protein, carbohydrates and fats – along with your age.
+										</p>
+
+										<h5>So What should I enter in the form ?</h5>
+										<p>
+											As mentionned, the TEF can vary depending on your food, but can also vary depending on your physical level. For example, someone who's really fit, has an high activity level and has a  very low bodyfat % probably has 
+											a TEF of more than 10%. It could go up to 25% !
+										</p>
+
+										<p>
+											In the contrary, someone who isn't really fit, has a hight bodyfat % and is mostly sedentary (and moreover might eat processed food only) has a low TEF.	
+										</p>
+										
+										<p>
+											Basically, you can enter you TEF on this format: If it is 10% : enter <b>1.10</b> and up to 25% which would be written <b>1.25</b>. So it should be between <b>1.10 and 1.25!</b>
+											If you don't have any idea and don't want to think about it, you can let it blank. Our system is set by default to 10% in order to stay conservative.
+										</p>
+						
+									</div> 
+
+									</div>
+							</div>
+
+
+
+                    <td><input type="number" name="tef"  min="1.10" max="1.25" step="0.01" class="form-control" id="height-metric" placeholder="Optional" style="width: 200px;" maxlength="4"></td>
+			    </tr>
+
+				<tr>
+                    <td class="col1"><label>How Many</label></td>
+                    <td><input type="number" max="7"  min="0" name="nb_workouts" class="form-control" id="height-metric" placeholder="Workouts/week" style="width: 200px;" maxlength="3" required="True"></td>
+			    </tr>
+
+				<tr>
+                    <td class="col1"><label>Workout Duration</label></td>
+                    <td><input type="number" name="min"  min="0" class="form-control" id="height-metric" placeholder="min" style="width: 200px;" maxlength="3" required="True"></td>
+			    </tr>
+
+				<tr>
+                    <td class="col1">Level</td>
+                    <td>
+                        <select name="level" class="form-control" style="width:200px;">
+                            <option value="1.20">Beginner</option>
+                            <option value="1.10">Intermediary</option>
+                            <option value="1.05">Advanced</option>
+                        </select>
+			        </td>
+			    </tr>
+			  
+			     <tr>
+                    <td class="col1">Activity
+						<a href="#popup3"><i class="bi-question-circle-fill"id="button_popup" style="font-size:16px"></i></a></td>
+						
+						<div id="popup3" class="overlay">
+							<div class="popup">
+								<h2>Activity Levels</h2>
+								<a class="close" href="#">&times;</a>
+								<div class="content">
+									<div class="text_popup">
+										<h5 class="titles_popup_activity">Sedentary</h5>
+										<p>
+										Sedentary means that you stay mostly seated all day long and probably don't exercise.
+										</p>
+
+										<h5 class="titles_popup_activity">Low Active</h5>
+										<p>
+										Low active means that you stay mostly seated all day long and might train some days. You don't move that much, maybe you only move from your place to go to the grocery store.
+										</p>
+
+										<h5 class="titles_popup_activity">Active</h5>
+										<p>
+										Active means that you train often, you might use a bike for your daily travels or might walk everyday for at least 10'000 steps, even if you have a job that requires your to stay seated most of the day.
+										</p>
+
+										<h5 class="titles_popup_activity">Very Active</h5>
+										<p>
+										You might have a very physical Job in this case. And/or, in addition, train everyday and do more than one physical activity. You're more active most of the day than most people.
+										</p>
+
+									</div> 
+
+									</div>
+							</div>
+
+
+					</td>
+                    <td>
+                        <select name="activity" class="form-control" style="width:200px;">
+                            <option>Sedentary</option>
+                            <option>Low Active</option>
+                            <option>Active</option>
+                            <option>Very Active</option>
+                        </select>
+			        </td>
+			    </tr>
+
+				<tr>
+                    <td class="col1">You're</td>
+                    <td>
+                        <select name="type_eater" class="form-control" style="width:200px;">
+                            <option>Vegan / Vegetarian</option>
+                            <option>Omnivore</option>
+                        </select>
+			        </td>
+			    </tr>
+
+				<tr>
+                    <td class="col1">Diet Preference</td>
+                    <td>
+                        <select name="diet_preferece" class="form-control" style="width:200px;">
+                            <option selected="">Alphit's choice</option>
+                            <option>High Fat / Low Carbs</option>
+							<option>High Carbs / Low Fat</option>
+                        </select>
+			        </td>
+			    </tr>
+
+				<tr>
+                    <td class="col1">Goal</td>
+                    <td>
+                        <select name="goal" class="form-control" style="width:200px;">
+                            <option selected="">Cut</option>
+                            <option>Recomposition</option>
+							<option>Lean Bulk</option>
+                        </select>
+			        </td>
+			    </tr>			
+			    <tr style="margin-top:15px;">
+                    <td class="col1">&nbsp;</td>
+                    <td><input type="submit" class="btn btn-primary" name="submit" value="Calculate!"></td>
+			    </tr>
+			  
+			  </tbody>
+            </table>
+			</form>
+		</div> <!-- end #form -->				
+    </div>
+{% endblock %}
