@@ -100,7 +100,34 @@ Click [Here](https://flask.palletsprojects.com/en/2.1.x/installation/) to see ho
 
 ## Running the app
 
-Go to the main folder called "Alphit" and then:
+### Install dependencies
+
+In order to run the project, you need to install the dependencies found in the requirements.txt file. 
+
+First you need to install Python if not done already: Click [Here](https://www.python.org/downloads/) to do so.
+
+Then, run the following command to create a Virtual Environment:
+
+```bash
+# Create a virtual environment
+$ python3 -m venv
+```
+
+### Activate your environment
+You’ll need to use different syntax for activating the virtual environment depending on which operating system and command shell you’re using.
+
+On Unix or MacOS, using the bash shell: source /path/to/venv/bin/activate<br>
+On Unix or MacOS, using the csh shell: source /path/to/venv/bin/activate.csh<br>
+On Unix or MacOS, using the fish shell: source /path/to/venv/bin/activate.fish<br>
+On Windows using the Command Prompt: path\to\venv\Scripts\activate.bat<br>
+On Windows using PowerShell: path\to\venv\Scripts\Activate.ps1<br>
+
+```bash
+# After your environment has been activated, install the dependencies
+$ pip install -r requirements.txt
+```
+
+## Now run the project
 
 ```bash
 # development
