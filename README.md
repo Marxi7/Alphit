@@ -91,14 +91,12 @@ On the button my account, you will find 4 sections:
 
   4. Log out
 
-## Installation
+## Running the app
 
-## Flask
+### Install Flask
 
 Click [Here](https://flask.palletsprojects.com/en/2.1.x/installation/) to see how to install Flask
 
-
-## Running the app
 
 ### Install dependencies
 
@@ -127,7 +125,7 @@ On Windows using PowerShell: path\to\venv\Scripts\Activate.ps1<br>
 $ pip install -r requirements.txt
 ```
 
-## Now run the project
+### Now run the project
 
 ```bash
 # development
